@@ -1,0 +1,26 @@
+﻿0test
+0test
+void main(){
+ int i=2;
+ int j=4;//test
+ int result=/**/0integer/**/
+ /*123*/while(i <=j){/*啊啊
+啊*/
+ result=/*  jv */result+j/**/;
+voidmain
+int1
+ i++;
+}
+printf();
+return result;
+}
+test
+123.
+.0
+0.0F
+.
+.1e-3f
+e-1
+.e-1
+.>=<1
+123
