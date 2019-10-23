@@ -8,32 +8,13 @@ import java.util.*;
 public class Attribute {
 
     public static void main(String[] args) {
-//        if (args.length == 1) {
-//            // 有一个参数输入
-//            String file = args[0];
-//            switch (file) {
-//                case "1":
-//                    testFile("src/xyz/chenshuyu/data/test.txt");
-//                    break;
-//                case "2":
-//                    testFile("src/xyz/chenshuyu/data/input.txt");
-//                    break;
-//                default:
-//                    testFile(file);
-//                    break;
-//            }
-//        }
-//        else if (args.length == 0) {
-//            String temp = System.getProperty("user.dir");
-//            System.out.println(temp);
-//            // 没有参数输入
-//            testFile(temp + "/xyz/chenshuyu/data/test.txt");
-//        } else {
+
         // 多个参数输入
         for (String file : args) {
             testFile(file);
         }
-        //}
+//        testFile("src/xyz/chenshuyu/data/test.txt");
+//        testFile("src/xyz/chenshuyu/data/input.txt");
     }
 
     private static final Set<String> keywords = new HashSet<String>() {
@@ -239,7 +220,7 @@ public class Attribute {
             else if (isCharAnd_(c)) {
 
                 while (true) {
-                    if (++i > ln) {
+                    if (++i >= ln) {
                         --i;
                         break;
                     } // 越界直接跳出
@@ -332,7 +313,6 @@ public class Attribute {
         StringBuilder newContent = new StringBuilder(strs[0]);
         for (int i = 1; i < strs.length; i++) {
             String[] temp = strs[i].split("\\*/");
-//                newContent.append(temp[0]);
             // 只有第一个*/ 算
             for (int j = 1; j < temp.length; j++) {
                 newContent.append(temp[j]);
@@ -343,10 +323,8 @@ public class Attribute {
         // 去掉//型注释，去掉空格,换行
         return newContent.toString().
                 replaceAll("//.*\r\n", "").
-                //   replaceAll("/\\*(.*\r\n)*.*\\*/", "").
-                //         replaceAll(" *", "").
-                        replaceAll("\n", " ").
-                        replaceAll("\r", " ");
+                replaceAll("\n", " ").
+                replaceAll("\r", " ");
     }
 
     public static void testFile(String filename) {
@@ -376,53 +354,54 @@ public class Attribute {
     public static void testFloat() {
         ArrayList<String> arrayList = new ArrayList<String>() {
             {
-                add(".");
-                add("007.");
-                add(".78");
-                add("0.1969");
-                add("1973");
-                add("78e-6");
-                add("9e");
-                add("129e9");
-                add("");
-                add("293.e-1");
-                add("249.e10");
-                add("291.e");
-                add(".829e12");
-                add(".29e-2");
-                add(".927e");
-                add("29.9e;");
-                add("292.9e");
-                add("193.29e-19");
-                add("8.1e2");
-                add("190");
-                add(".f");
-                add("007.F");
-                add(".78f");
-                add("0.1969F");
-                add("1973f");
-                add("78e-6F");
-                add("9ef");
-                add("129e9f");
-                add("f");
-                add("293.e-1F");
-                add("249.e10f");
-                add("291.eF");
-                add(".829e12f");
-                add(".29e-2FF");
-                add(".927ef");
-                add("29.9e;f");
-                add("292.9ef");
-                add("193.29e-19F");
-                add("8.1e2F");
-                add("190f");
-                add(".e-1");
-                add("e-1");
+//                add(".");
+//                add("007.");
+//                add(".78");
+//                add("0.1969");
+//                add("1973");
+//                add("78e-6");
+//                add("9e");
+//                add("129e9");
+//                add("");
+//                add("293.e-1");
+//                add("249.e10");
+//                add("291.e");
+//                add(".829e12");
+//                add(".29e-2");
+//                add(".927e");
+//                add("29.9e;");
+//                add("292.9e");
+//                add("193.29e-19");
+//                add("8.1e2");
+//                add("190");
+//                add(".f");
+//                add("007.F");
+//                add(".78f");
+//                add("0.1969F");
+//                add("1973f");
+//                add("78e-6F");
+//                add("9ef");
+//                add("129e9f");
+//                add("f");
+//                add("293.e-1F");
+//                add("249.e10f");
+//                add("291.eF");
+//                add(".829e12f");
+//                add(".29e-2FF");
+//                add(".927ef");
+//                add("29.9e;f");
+//                add("292.9ef");
+//                add("193.29e-19F");
+//                add("8.1e2F");
+//                add("190f");
+//                add(".e-1");
+                add("10f");
             }
         };
+        System.out.println(analyzer("10f".toCharArray()).get(1).getKind());
 
         for (String temp : arrayList) {
-            System.out.println(analyzer(temp.toCharArray()));
+            // System.out.println(analyzer(temp.toString()));
         }
     }
 }
