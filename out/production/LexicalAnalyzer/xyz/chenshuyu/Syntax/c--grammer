@@ -1,0 +1,64 @@
+S -> funcs
+funcs -> func funcs
+funcs -> $
+func -> void IDN ( arg ) func_body
+func -> IDN init ;
+func -> type IDN funordefine
+funordefine -> ( arg ) func_body
+funordefine -> init ;
+type -> int
+type -> float
+arg -> type IDN
+arg -> $
+func_body -> ;
+func_body -> block
+block -> { statements }
+statements -> statement statements
+statements -> $
+statement -> init_exp ;
+statement -> control_stmts
+init_exp -> IDN fun_value_exp
+init_exp -> type IDN fun_value_exp
+fun_value_exp -> $
+fun_value_exp -> init
+fun_value_exp -> ( isnull_expr )
+init -> = expression
+init -> $
+control_stmts -> jump_stmt
+control_stmts -> iteration_stmt
+control_stmts -> if_control_stmts
+if_control_stmts -> if ( expression ) block_stmt else_result
+jump_stmt -> continue ;
+jump_stmt -> break ;
+jump_stmt -> return isnull_expr ;
+iteration_stmt -> while ( expression ) block_stmt
+iteration_stmt -> for ( null_init_exp ; isnull_expr ; isnull_expr ) block_stmt
+null_init_exp -> init_exp
+null_init_exp -> $
+else_result -> else elseif_stmt
+elseif_stmt -> if_control_stmts
+elseif_stmt -> block_stmt
+else_result -> $
+block_stmt -> block
+block_stmt -> statement
+isnull_expr -> expression
+isnull_expr -> $
+expression -> value exp
+exp -> $
+exp -> op value
+op -> >=
+op -> <=
+op -> ==
+op -> =
+value -> item value1
+value1 -> + item value1
+value1 -> - item value1
+value1 -> / item value1
+value1 -> * item value1
+value1 -> $
+item -> IDN fun_value
+item -> ( value )
+item -> INT
+item -> FLOAT
+fun_value -> $
+fun_value -> ( isnull_expr )

@@ -1,5 +1,7 @@
 package xyz.chenshuyu.lexical;
 
+import xyz.chenshuyu.Syntax.LL1;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -10,12 +12,14 @@ public class Attribute {
     public static void main(String[] args) {
 
         // 多个参数输入
-        for (String file : args) {
-            testFile(file);
-        }
-//        testFile("src/xyz/chenshuyu/data/test.txt");
+//        for (String file : args) {
+//            testFile(file);
+//        }
+        //   testFiletoStr("src/xyz/chenshuyu/data/test.txt");
+        testFile("src/xyz/chenshuyu/data/test.txt");
 //        testFile("src/xyz/chenshuyu/data/input.txt");
     }
+
 
     private static final Set<String> keywords = new HashSet<String>() {
         {
@@ -56,20 +60,29 @@ public class Attribute {
         }
     }; // 界符集合
 
+    private static Set<String> terminators = new HashSet<String>() {
+        {
+            addAll(Attribute.getKeywords());
+            addAll(Attribute.getBoundarys());
+            addAll(Attribute.getOperators());
+            //add(nullString);
+        }
+    };// 终结符集合
+
 
     /**
      * C语言规定，标识符只能由字母（A~Z, a~z）、数字（0~9）和下划线（_）组成，
      * 并且第一个字符必须是字母或下划线，不能是数字。
      */
-    private static final String isIdentifer = "identifier"; // 标识符
+    private static final String isIdentifer = "IDN"; // 标识符
 
 //    private static final String isConstant = "constant"; // 常数
 
     private static final String isError = "isError"; // 非法表达
 
-    private static final String isFloat = "float"; // 浮点数
+    private static final String isFloat = "FLOAT"; // 浮点数
 
-    private static final String isInt = "integer"; // 整数
+    private static final String isInt = "INT"; // 整数
 
     private static final String isBoundary = "boundary"; // 界符
 
@@ -346,6 +359,50 @@ public class Attribute {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static String testFiletoStr(String filename) {
+        File file = new File(filename);
+        StringBuffer out = new StringBuffer("");
+        try {
+            InputStream is = new FileInputStream(file);
+            int iAvail = is.available();
+            byte[] bytes = new byte[iAvail];
+            is.read(bytes);
+            // 获取文件内容
+            String content = new String(bytes);
+            content = processFile(content);
+            ArrayList<Data> datas = analyzer(content.toCharArray());
+            for (Data data : datas) {
+                if (terminators.contains(data.getContent())) {
+                    if (data.getContent().equals("main")) {
+                        out.append("IDN ");
+                    } else {
+                        out.append(data.getContent() + " ");
+                    }
+                } else {
+                    out.append(data.getKind() + " ");
+                }
+                System.out.println(data.getContent() + ": " + data.getKind());
+            }
+            System.out.println();
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return out.toString();
+    }
+
+    public static Set<String> getKeywords() {
+        return keywords;
+    }
+
+    public static Set<String> getOperators() {
+        return operators;
+    }
+
+    public static Set<String> getBoundarys() {
+        return boundarys;
     }
 
     /**
