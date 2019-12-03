@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LexicalAnalyzer:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/LexicalAnalyzer_jar2</output-path>
+    <root id="archive" name="LexicalAnalyzer.jar">
+      <element id="module-output" name="LexicalAnalyzer" />
+    </root>
+  </artifact>
+</component>

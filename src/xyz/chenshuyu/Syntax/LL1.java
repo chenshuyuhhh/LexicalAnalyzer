@@ -47,10 +47,11 @@ public class LL1 {
      */
     public void inputGrammer(String filename) {
         grammer.clear();
-        File file = new File(filename);
+        //    File file = new File(LL1.class.getResource("").getFile()+filename);
 
         try {
-            InputStreamReader inputReader = new InputStreamReader(new FileInputStream(file));
+            InputStream is = this.getClass().getResourceAsStream(filename);
+            InputStreamReader inputReader = new InputStreamReader(is);
             BufferedReader bf = new BufferedReader(inputReader);
             // 按行读取字符串
             String str;
@@ -298,6 +299,7 @@ public class LL1 {
 
     /**
      * 获得某一个非终结符的预测分析表的那一行
+     *
      * @param left 非终结符
      */
     private void getOneline(String left) {

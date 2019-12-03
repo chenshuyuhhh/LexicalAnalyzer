@@ -16,7 +16,7 @@ public class Attribute {
 //            testFile(file);
 //        }
         //   testFiletoStr("src/xyz/chenshuyu/data/test.txt");
-        testFile("src/xyz/chenshuyu/data/test.txt");
+        // testFile("src/xyz/chenshuyu/data/test.txt");
 //        testFile("src/xyz/chenshuyu/data/input.txt");
     }
 
@@ -361,11 +361,43 @@ public class Attribute {
         }
     }
 
-    public static String testFiletoStr(String filename) {
+    public static String tFiletoStr(String filename) {
         File file = new File(filename);
         StringBuffer out = new StringBuffer("");
         try {
             InputStream is = new FileInputStream(file);
+            int iAvail = is.available();
+            byte[] bytes = new byte[iAvail];
+            is.read(bytes);
+            // 获取文件内容
+            String content = new String(bytes);
+            content = processFile(content);
+            ArrayList<Data> datas = analyzer(content.toCharArray());
+            for (Data data : datas) {
+                if (terminators.contains(data.getContent())) {
+                    if (data.getContent().equals("main")) {
+                        out.append("IDN ");
+                    } else {
+                        out.append(data.getContent() + " ");
+                    }
+                } else {
+                    out.append(data.getKind() + " ");
+                }
+                System.out.println(data.getContent() + ": " + data.getKind());
+            }
+            System.out.println();
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return out.toString();
+    }
+
+    public static String testFiletoStr(String filename) {
+        // File file = new File(Attribute.class.getResource("").getFile() + filename);
+        StringBuffer out = new StringBuffer("");
+        try {
+            InputStream is = Attribute.class.getResourceAsStream(filename);
             int iAvail = is.available();
             byte[] bytes = new byte[iAvail];
             is.read(bytes);
